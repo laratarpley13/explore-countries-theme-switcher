@@ -1,13 +1,19 @@
 import React, { useContext } from 'react';
 import Context from './Context';
 
-export default function Countries() {
-    const countries = useContext(Context);
+function selectCountry(countryName, props) {
+    console.log(countryName);
+    props.history.push(`/${countryName}`)
+
+}
+
+export default function Countries(props) {
+    const { countries } = useContext(Context);
     return (
         <div className="countries">
             <h2>Countries here!</h2>
             {countries.map(country => 
-                <div key={country.name} className="country">
+                <div key={country.name} className="country" onClick={() => selectCountry(country.name, props)}>
                     <h3 className="name">{country.name}</h3>
                     <div className="details">
                         <p>Population: {parseInt(country.population).toLocaleString('en-US')}</p>
