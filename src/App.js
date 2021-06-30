@@ -12,6 +12,11 @@ function App() {
 
   const [countries, setCountries] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+
+  console.log(searchTerm);
+  console.log(selectedRegion);
 
   useEffect(() => {
     fetch(fetchUrl)
@@ -31,6 +36,26 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    setSelectedCountries(countries.filter((val) => {
+      if(searchTerm === "") {
+        return val;
+      } else if(val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return val;
+      }
+    }))
+  }, [searchTerm, countries])
+
+  useEffect(() => {
+    setCountries(countries.filter((val) => {
+      if(selectedRegion === "all") {
+        return val;
+      } else if(val.region === selectedRegion) {
+        return val;
+      }
+    }))
+  }, [selectedRegion])
+
   return (
     <Context.Provider value={{ selectedCountries, countries }}>
       <div className="App">
@@ -38,7 +63,13 @@ function App() {
         <Route
           exact 
           path='/'
-          component={SearchFilter}
+          render={(props) => 
+            <SearchFilter 
+              {...props}
+              setSearchTerm = {setSearchTerm}
+              setSelectedRegion = {setSelectedRegion}
+            />
+          }
         />
         <Route
           exact 

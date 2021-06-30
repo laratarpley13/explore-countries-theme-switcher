@@ -8,11 +8,11 @@ function selectCountry(countryName, props) {
 }
 
 export default function Countries(props) {
-    const { countries } = useContext(Context);
+    const { selectedCountries } = useContext(Context);
     return (
         <div className="countries">
             <h2>Countries here!</h2>
-            {countries.map(country => 
+            {selectedCountries.map(country => 
                 <div key={country.name} className="country" onClick={() => selectCountry(country.name, props)}>
                     <h3 className="name">{country.name}</h3>
                     <div className="details">
