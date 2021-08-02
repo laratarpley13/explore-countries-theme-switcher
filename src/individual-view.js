@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import Context from './Context';
 
 function goBack(props) {
@@ -7,9 +7,7 @@ function goBack(props) {
 
 function getBorderCountries(selectedCountry, countries, props) {
     const borderCodes = selectedCountry.borders;
-    console.log(borderCodes);
     const borderCountries = countries.filter(({ alpha3Code }) => borderCodes.includes(alpha3Code)); 
-    console.log(borderCountries);
     if(borderCountries.length === 0) {
         return <p>No Border Countries</p>
     }
@@ -18,9 +16,7 @@ function getBorderCountries(selectedCountry, countries, props) {
 
 export default function IndividualView(props) {
     const { countries } = useContext(Context);
-
     const selectedCountry = countries.filter(country => country.name === props.match.params.countryName)[0];
-    console.log(selectedCountry);
 
     return (
         <div className="individual-view">

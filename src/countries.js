@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Context from './Context';
 
 function selectCountry(countryName, props) {
-    console.log(countryName);
     props.history.push(`/${countryName}`)
 
 }

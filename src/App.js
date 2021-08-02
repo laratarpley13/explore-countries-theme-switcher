@@ -26,7 +26,6 @@ function App() {
       .then(response => {
         setCountries(response);
         setSelectedCountries(response);
-        console.log(response);
       })
       .catch(err => {
         console.log(err)
