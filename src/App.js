@@ -15,9 +15,6 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
 
-  console.log(searchTerm);
-  console.log(selectedRegion);
-
   useEffect(() => {
     fetch(fetchUrl)
       .then(response => {
@@ -37,24 +34,26 @@ function App() {
   }, [])
 
   useEffect(() => {
-    setSelectedCountries(countries.filter((val) => {
-      if(searchTerm === "") {
-        return val;
-      } else if(val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return val;
-      }
-    }))
-  }, [searchTerm, countries])
+    let result = [...countries];
 
-  useEffect(() => {
-    setCountries(countries.filter((val) => {
-      if(selectedRegion === "all") {
-        return val;
-      } else if(val.region === selectedRegion) {
-        return val;
-      }
-    }))
-  }, [selectedRegion])
+    if(searchTerm) {
+      result = result.filter((country) => {
+        if(country.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return country;
+        }
+      });
+    }
+
+    if(selectedRegion && selectedRegion !== "all") {
+      result = result.filter((country) => {
+        if(country.region === selectedRegion) {
+          return country;
+        }
+      })
+    }
+
+    setSelectedCountries(result);
+  }, [selectedRegion, searchTerm, countries])
 
   return (
     <Context.Provider value={{ selectedCountries, countries }}>
